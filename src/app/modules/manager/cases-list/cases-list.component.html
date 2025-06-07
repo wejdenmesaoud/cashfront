@@ -1,0 +1,233 @@
+<div class="flex flex-col flex-auto min-w-0 bg-gray-50">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <!-- Cases Lists -->
+        <div class="flex flex-col">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                        <path d="M3 8a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                    </svg>
+                    Cases Lists
+                </h1>
+
+                <!-- Upload Excel Button -->
+                <button (click)="triggerFileInput()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg shadow-md transition duration-150 ease-in-out flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span *ngIf="!isUploading">Upload Excel</span>
+                    <span *ngIf="isUploading">Uploading...</span>
+                </button>
+                <!-- Hidden file input -->
+                <input #fileInput type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" class="hidden" />
+            </div>
+
+            <!-- Filter Section -->
+            <div class="bg-white rounded-xl shadow-md mb-8 overflow-hidden border border-gray-100">
+                <div class="flex flex-col sm:flex-row">
+                    <div class="flex items-center p-4 bg-blue-50 border-b sm:border-b-0 sm:border-r border-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-sm font-semibold text-blue-800">Filter By</span>
+                    </div>
+                    <div class="flex items-center p-4 border-b sm:border-b-0 sm:border-r border-gray-200 relative cursor-pointer hover:bg-gray-50 transition-colors duration-150" id="dateFilterBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-700">Date</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="flex items-center p-4 border-b sm:border-b-0 sm:border-r border-gray-200 relative hover:bg-gray-50 transition-colors duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-700">Order Type</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="flex items-center p-4 border-b sm:border-b-0 sm:border-r border-gray-200 relative hover:bg-gray-50 transition-colors duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-700">Order Status</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="flex items-center p-4 border-b sm:border-b-0 sm:border-r border-gray-200 relative hover:bg-gray-50 transition-colors duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-700">Actions</span>
+                    </div>
+                    <div class="flex items-center p-4 ml-auto">
+                        <button (click)="resetFilter()" class="flex items-center text-red-600 hover:text-red-700 text-sm font-medium transition-colors duration-150">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Popup (Hidden by default, shown when Date filter is clicked) -->
+            <div id="calendarPopup" class="hidden absolute z-10 mt-16 ml-20 bg-white rounded-lg shadow-xl p-5 border border-gray-100 w-72">
+                <!-- Date Range Selection -->
+                <div class="flex justify-between mb-3 border-b pb-2">
+                    <div class="text-xs">
+                        <div class="text-gray-500 mb-1">From</div>
+                        <div id="startDate" class="font-medium">Select date</div>
+                    </div>
+                    <div class="text-xs">
+                        <div class="text-gray-500 mb-1">To</div>
+                        <div id="endDate" class="font-medium">Select date</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <button class="p-1 hover:bg-gray-100 rounded-full" (click)="previousMonth()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <h3 class="text-sm font-medium">{{ currentMonth }} {{ currentYear }}</h3>
+                        <button class="p-1 hover:bg-gray-100 rounded-full" (click)="nextMonth()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center">
+                        <div class="text-xs font-medium text-gray-500">S</div>
+                        <div class="text-xs font-medium text-gray-500">M</div>
+                        <div class="text-xs font-medium text-gray-500">T</div>
+                        <div class="text-xs font-medium text-gray-500">W</div>
+                        <div class="text-xs font-medium text-gray-500">T</div>
+                        <div class="text-xs font-medium text-gray-500">F</div>
+                        <div class="text-xs font-medium text-gray-500">S</div>
+
+                        <div *ngFor="let day of calendarDays" 
+                             class="text-xs py-1 cursor-pointer hover:bg-gray-50"
+                             [class.text-gray-400]="!day.isCurrentMonth">
+                            {{ day.day }}
+                        </div>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500 mb-2">Select start and end dates</div>
+                <button id="applyFilterButton" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded-md transition-colors duration-150 flex items-center justify-center">
+                    <svg *ngIf="isFiltering" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Apply Filter</span>
+                </button>
+            </div>
+
+            <!-- Cases Table -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                <div class="overflow-x-auto p-4">
+                    <!-- Loading spinner -->
+                    <div *ngIf="isUploading" class="flex justify-center items-center py-8">
+                        <mat-spinner diameter="40"></mat-spinner>
+                        <span class="ml-4 text-gray-600">Loading cases...</span>
+                    </div>
+
+                    <!-- Table with Angular Material -->
+                    <table mat-table [dataSource]="dataSource" matSort class="w-full" *ngIf="!isUploading">
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">Case ID</th>
+                            <td mat-cell *matCellDef="let case">
+                                <span class="text-blue-700 font-semibold">{{case.id || 'N/A'}}</span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Engineer Column -->
+                        <ng-container matColumnDef="engineer">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">Engineer</th>
+                            <td mat-cell *matCellDef="let case">
+                                <span>{{case.engineer.fullName || 'N/A'}}</span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Case Description Column -->
+                        <ng-container matColumnDef="caseDescription">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">Case Description</th>
+                            <td mat-cell *matCellDef="let case">{{case.caseDescription || 'N/A'}}</td>
+                        </ng-container>
+
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">Date</th>
+                            <td mat-cell *matCellDef="let case">{{case.date | date:'dd MMM yyyy' || 'N/A'}}</td>
+                        </ng-container>
+
+                        <!-- CES Rating Column -->
+                        <ng-container matColumnDef="cesRating">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">CES Rating</th>
+                            <td mat-cell *matCellDef="let case">
+                                <div class="flex items-center">
+                                    <span class="mr-2">{{case.cesRating || 'N/A'}}</span>
+                                    <div class="flex">
+                                        <mat-icon *ngFor="let star of [1,2,3,4,5]"
+                                                [class.text-yellow-400]="star <= case.cesRating"
+                                                [class.text-gray-300]="star > case.cesRating"
+                                                class="h-4 w-4 text-sm">
+                                            star
+                                        </mat-icon>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Survey Source Column -->
+                        <ng-container matColumnDef="surveySource">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-blue-50 text-blue-800 font-semibold">Survey Source</th>
+                            <td mat-cell *matCellDef="let case">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                                    [ngClass]="{'bg-green-100 text-green-800': case.surveySource === 'Completed',
+                                              'bg-purple-100 text-purple-800': case.surveySource === 'Processing'}">
+                                    {{case.surveySource || 'N/A'}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef class="bg-blue-50 text-blue-800 font-semibold">Actions</th>
+                            <td mat-cell *matCellDef="let case">
+                                <button mat-icon-button color="warn" (click)="deleteCase(case.id)" matTooltip="Delete Case">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <!-- Header and Row Definitions -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-blue-50 transition-colors duration-150"></tr>
+
+                        <!-- No Data Row -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell py-4 text-center text-gray-500" [attr.colspan]="displayedColumns.length">
+                                No cases found
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Pagination -->
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

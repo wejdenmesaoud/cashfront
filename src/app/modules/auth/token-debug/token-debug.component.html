@@ -1,0 +1,59 @@
+<div class="flex flex-col flex-auto min-w-0 p-6">
+    <div class="text-3xl font-bold mb-4">Authentication Token Debug</div>
+
+    <div class="flex flex-col p-6 bg-card shadow rounded-lg overflow-hidden mb-4">
+        <div class="text-lg font-medium mb-2">Current Token Status</div>
+        <div class="flex flex-col">
+            <div class="mb-2">
+                <span class="font-medium">Token Available:</span> 
+                <span [ngClass]="token ? 'text-green-500' : 'text-red-500'">{{token ? 'Yes' : 'No'}}</span>
+            </div>
+            <div class="mb-2">
+                <span class="font-medium">Token Expired:</span> 
+                <span [ngClass]="isTokenExpired ? 'text-red-500' : 'text-green-500'">{{isTokenExpired ? 'Yes' : 'No'}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-6 bg-card shadow rounded-lg overflow-hidden mb-4">
+        <div class="text-lg font-medium mb-2">Token Value</div>
+        <div class="bg-gray-100 p-4 rounded overflow-auto max-h-40">
+            <pre>{{token || 'No token available'}}</pre>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-6 bg-card shadow rounded-lg overflow-hidden mb-4">
+        <div class="text-lg font-medium mb-2">Token Information</div>
+        <div class="bg-gray-100 p-4 rounded overflow-auto max-h-40">
+            <pre>{{tokenInfo | json}}</pre>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-6 bg-card shadow rounded-lg overflow-hidden mb-4">
+        <div class="text-lg font-medium mb-2">Token Actions</div>
+        <div class="flex flex-row gap-4">
+            <button 
+                class="px-6 py-3 rounded bg-primary text-on-primary"
+                (click)="refreshTokenInfo()">
+                Refresh Token Info
+            </button>
+            <button 
+                class="px-6 py-3 rounded bg-warn text-on-warn"
+                (click)="clearToken()">
+                Clear Token
+            </button>
+            <button 
+                class="px-6 py-3 rounded bg-accent text-on-accent"
+                (click)="setDummyToken()">
+                Set Test Token
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-6 bg-card shadow rounded-lg overflow-hidden">
+        <div class="text-lg font-medium mb-2">localStorage Debug</div>
+        <div class="bg-gray-100 p-4 rounded overflow-auto max-h-40">
+            <pre>accessToken: {{localStorage.getItem('accessToken') || 'Not set'}}</pre>
+        </div>
+    </div>
+</div>

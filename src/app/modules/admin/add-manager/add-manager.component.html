@@ -1,0 +1,213 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+                <h1 class="text-4xl font-extrabold tracking-tight leading-none">Add Manager</h1>
+
+            </div>
+
+            <!-- Alert -->
+            <fuse-alert
+                class="mb-8"
+                *ngIf="showAlert"
+                [appearance]="'outline'"
+                [showIcon]="false"
+                [type]="alert.type"
+                [@shake]="alert.type === 'error'">
+                {{alert.message}}
+            </fuse-alert>
+
+            <!-- Form Container -->
+            <div class="bg-white rounded-2xl shadow p-6 sm:p-8 mb-6">
+                <form class="space-y-8" [formGroup]="managerForm" (ngSubmit)="submitForm()">
+                    <!-- Form Grid - 2 columns on larger screens -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="firstName" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                <span>First Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                formControlName="firstName"
+                                placeholder="Enter first name"
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                            <div *ngIf="managerForm.get('firstName')?.hasError('required') && managerForm.get('firstName')?.touched" class="text-red-500 text-sm mt-1">
+                                First name is required
+                            </div>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="lastName" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Last Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                formControlName="lastName"
+                                placeholder="Enter last name"
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                            <div *ngIf="managerForm.get('lastName')?.hasError('required') && managerForm.get('lastName')?.touched" class="text-red-500 text-sm mt-1">
+                                Last name is required
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="email" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                                <span>Email</span>
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                formControlName="email"
+                                placeholder="Enter email address"
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                            <div *ngIf="managerForm.get('email')?.hasError('required') && managerForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+                                Email is required
+                            </div>
+                            <div *ngIf="managerForm.get('email')?.hasError('email') && managerForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="phone" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                <span>Phone Number</span>
+                            </label>
+                            <input
+                                type="tel"
+                                id="phone"
+                                formControlName="phone"
+                                placeholder="Enter phone number"
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                            <div *ngIf="managerForm.get('phone')?.hasError('required') && managerForm.get('phone')?.touched" class="text-red-500 text-sm mt-1">
+                                Phone number is required
+                            </div>
+                        </div>
+
+                        <!-- Team Selection -->
+                        <div class="flex flex-col space-y-2 md:col-span-2 group">
+                            <label for="team" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                </svg>
+                                <span>Team</span>
+                            </label>
+                            <div class="relative">
+                                <select
+                                    id="team"
+                                    formControlName="team"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 appearance-none shadow-sm"
+                                >
+                                    <option value="" disabled>Select team</option>
+                                    <option value="development">Development</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="support">Support</option>
+                                    <option value="hr">Human Resources</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div *ngIf="managerForm.get('team')?.hasError('required') && managerForm.get('team')?.touched" class="text-red-500 text-sm mt-1">
+                                Team is required
+                            </div>
+                        </div>
+
+                        <!-- Gender Selection -->
+                        <div class="flex flex-col space-y-2">
+                            <label for="gender" class="font-medium text-gray-700 flex items-center space-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Gender</span>
+                            </label>
+                            <div class="flex flex-wrap gap-4 mt-2">
+                                <label for="male" class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-blue-50 hover:border-blue-200 transition-all duration-200">
+                                    <input type="radio" id="male" formControlName="gender" value="male"
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 transition-colors duration-200">
+                                    <span class="ml-2 text-gray-700">Male</span>
+                                </label>
+                                <label for="female" class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-blue-50 hover:border-blue-200 transition-all duration-200">
+                                    <input type="radio" id="female" formControlName="gender" value="female"
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 transition-colors duration-200">
+                                    <span class="ml-2 text-gray-700">Female</span>
+                                </label>
+                            </div>
+                            <div *ngIf="managerForm.get('gender')?.hasError('required') && managerForm.get('gender')?.touched" class="text-red-500 text-sm mt-1">
+                                Gender is required
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="flex flex-col space-y-2 md:col-span-2 group">
+                            <label for="password" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-200" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Password</span>
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                formControlName="password"
+                                placeholder="Enter password"
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                            <div *ngIf="managerForm.get('password')?.hasError('required') && managerForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+                                Password is required
+                            </div>
+                            <div *ngIf="managerForm.get('password')?.hasError('minlength') && managerForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+                                Password must be at least 6 characters
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center pt-4">
+                        <button
+                            type="submit"
+                            [disabled]="managerForm.invalid || isSubmitting"
+                            class="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 min-w-[200px] disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span *ngIf="!isSubmitting">Add Manager</span>
+                            <span *ngIf="isSubmitting" class="flex items-center justify-center">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Processing...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

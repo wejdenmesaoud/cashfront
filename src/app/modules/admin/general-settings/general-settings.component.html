@@ -1,0 +1,71 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">        
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+                <h1 class="text-4xl font-extrabold tracking-tight leading-none">General Settings</h1>
+            </div>
+
+            <!-- Form Container -->
+            <div class="bg-white rounded-2xl shadow p-6 sm:p-8 mb-6">
+                <form class="space-y-8">
+                    <!-- Form Grid - 2 columns on larger screens -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Case confession -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="caseConfession" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <span>Case confession</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="caseConfession" 
+                                name="caseConfession" 
+                                placeholder="1" 
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                        </div>
+                        
+                        <!-- Chat confession -->
+                        <div class="flex flex-col space-y-2 group">
+                            <label for="chatConfession" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <span>Chat confession</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="chatConfession" 
+                                name="chatConfession" 
+                                placeholder="2" 
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                        </div>
+
+                        <!-- Ldap Id -->
+                        <div class="flex flex-col space-y-2 md:col-span-2 group">
+                            <label for="ldapId" class="font-medium text-gray-700 flex items-center space-x-1 group-focus-within:text-blue-600 transition-colors duration-200">
+                                <span>Ldap Id</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="ldapId" 
+                                name="ldapId" 
+                                placeholder="230294r0204" 
+                                class="px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-all duration-200 shadow-sm"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center pt-4">
+                        <button 
+                            type="submit" 
+                            class="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 min-w-[200px]">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

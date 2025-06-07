@@ -1,0 +1,245 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+                <h1 class="text-4xl font-extrabold tracking-tight leading-none">Engineers</h1>
+                <div class="flex items-center mt-4 sm:mt-0">
+                    <!-- Search Input -->
+                    <div class="relative mr-4">
+                        <input 
+                            type="text" 
+                            placeholder="Search engineers..." 
+                            [(ngModel)]="searchQuery"
+                            (input)="filterEngineers()"
+                            class="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full sm:w-64"
+                        >
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                            <!-- Heroicon: Search -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                    </div>
+                    
+                    <!-- Add Engineer Button -->
+                    <button 
+                        (click)="navigateToAddEngineer()"
+                        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Add Engineer</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            </div>
+
+            <!-- No Engineers Message -->
+            <div *ngIf="!isLoading && filteredEngineers.length === 0" class="bg-white rounded-xl shadow-md p-8 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">No Engineers Found</h2>
+                <p class="text-gray-500 mb-6">There are no engineers to display or your search didn't match any results.</p>
+                <button 
+                    (click)="navigateToAddEngineer()"
+                    class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 inline-flex items-center justify-center"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Add Engineer</span>
+                </button>
+            </div>
+
+            <!-- Engineers Table -->
+            <div *ngIf="!isLoading && filteredEngineers.length > 0" class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200">
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Full Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Phone</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Gender</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Manager</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <!-- Engineer Row -->
+                            <tr *ngFor="let engineer of filteredEngineers" class="hover:bg-blue-50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-full object-cover"
+                                                 [src]="'https://ui-avatars.com/api/?name=' + (engineer.fullName || '_') + '&background=random'"
+                                                 [alt]="engineer.fullName || 'Unknown'">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-800">
+                                                {{ engineer.fullName || 'Unknown' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ engineer.email || 'No email provided' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ engineer.phoneNumber || 'No phone provided' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ engineer.gender || 'Not specified' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ engineer.manager || 'Not assigned' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900" (click)="openEditForm(engineer)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900" (click)="deleteEngineer(engineer)" [disabled]="isDeleting">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Engineer Modal -->
+    <div *ngIf="isEditing" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Edit Engineer</h2>
+                    <button (click)="closeEditForm()" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Error Alert -->
+                <fuse-alert
+                    *ngIf="formError"
+                    [appearance]="'outline'"
+                    [showIcon]="true"
+                    [type]="'error'"
+                    [dismissed]="false"
+                    class="mb-6"
+                >
+                    <span fuseAlertTitle>Error</span>
+                    {{ formError }}
+                </fuse-alert>
+
+                <form [formGroup]="editForm" (ngSubmit)="submitEditForm()" class="space-y-6">
+                    <!-- Full Name -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="edit-fullName" class="font-medium text-gray-700">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="edit-fullName" 
+                            formControlName="fullName"
+                            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                            [ngClass]="{'border-red-500': isControlInvalid('fullName')}"
+                        >
+                        <div *ngIf="isControlInvalid('fullName')" class="text-red-500 text-sm mt-1">
+                            {{ getErrorMessage('fullName') }}
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="edit-phoneNumber" class="font-medium text-gray-700">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            id="edit-phoneNumber" 
+                            formControlName="phoneNumber"
+                            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                            [ngClass]="{'border-red-500': isControlInvalid('phoneNumber')}"
+                        >
+                        <div *ngIf="isControlInvalid('phoneNumber')" class="text-red-500 text-sm mt-1">
+                            {{ getErrorMessage('phoneNumber') }}
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="edit-email" class="font-medium text-gray-700">Email</label>
+                        <input 
+                            type="email" 
+                            id="edit-email" 
+                            formControlName="email"
+                            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                            [ngClass]="{'border-red-500': isControlInvalid('email')}"
+                        >
+                        <div *ngIf="isControlInvalid('email')" class="text-red-500 text-sm mt-1">
+                            {{ getErrorMessage('email') }}
+                        </div>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="edit-gender" class="font-medium text-gray-700">Gender</label>
+                        <select 
+                            id="edit-gender" 
+                            formControlName="gender"
+                            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 appearance-none bg-white w-full"
+                            [ngClass]="{'border-red-500': isControlInvalid('gender')}"
+                        >
+                            <option value="" disabled>Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div *ngIf="isControlInvalid('gender')" class="text-red-500 text-sm mt-1">
+                            {{ getErrorMessage('gender') }}
+                        </div>
+                    </div>
+
+                    <!-- Manager -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="edit-manager" class="font-medium text-gray-700">Manager</label>
+                        <input 
+                            type="text" 
+                            id="edit-manager" 
+                            formControlName="manager"
+                            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                            [ngClass]="{'border-red-500': isControlInvalid('manager')}"
+                        >
+                        <div *ngIf="isControlInvalid('manager')" class="text-red-500 text-sm mt-1">
+                            {{ getErrorMessage('manager') }}
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end pt-4">
+                        <button 
+                            type="button" 
+                            (click)="closeEditForm()"
+                            class="px-6 py-2 mr-4 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

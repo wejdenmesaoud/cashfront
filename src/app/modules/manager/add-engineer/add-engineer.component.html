@@ -1,0 +1,189 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+                <h1 class="text-4xl font-extrabold tracking-tight leading-none">Add Engineer</h1>
+            </div>
+
+            <!-- Form Container -->
+            <div class="bg-white rounded-2xl shadow p-6 sm:p-8 mb-6">
+                <!-- Error Alert -->
+                <fuse-alert
+                    *ngIf="formError"
+                    [appearance]="'outline'"
+                    [showIcon]="true"
+                    [type]="'error'"
+                    [dismissed]="false"
+                    class="mb-6"
+                >
+                    <span fuseAlertTitle>Error</span>
+                    {{ formError }}
+                </fuse-alert>
+
+                <form [formGroup]="engineerForm" (ngSubmit)="onSubmit()" class="space-y-8">
+                    <!-- Form Grid - 2 columns on larger screens -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div class="flex flex-col space-y-2">
+                            <label for="fullName" class="font-medium text-gray-700">Full Name</label>
+
+                            <div class="relative">
+                              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <!-- Heroicon: User -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9.969 9.969 0 0112 15c2.389 0 4.58.835 6.263 2.224M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                              </span>
+
+                              <input
+                                type="text"
+                                id="fullName"
+                                formControlName="fullName"
+                                placeholder="Enter full name"
+                                class="pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                                [ngClass]="{'border-red-500': isControlInvalid('fullName')}"
+                              >
+                            </div>
+                            <div *ngIf="isControlInvalid('fullName')" class="text-red-500 text-sm mt-1">
+                                {{ getErrorMessage('fullName') }}
+                            </div>
+                          </div>
+
+
+                        <!-- Phone Number -->
+                        <div class="flex flex-col space-y-2">
+                            <label for="phoneNumber" class="font-medium text-gray-700">Phone Number</label>
+
+                            <div class="relative">
+                              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <!-- Heroicon: Phone -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h2.28a2 2 0 011.98 1.71l.34 2.4a2 2 0 01-.58 1.81l-1.2 1.2a16.06 16.06 0 006.36 6.36l1.2-1.2a2 2 0 011.81-.58l2.4.34a2 2 0 011.71 1.98V19a2 2 0 01-2 2h-.28C9.4 21 3 14.6 3 6.28V6a2 2 0 012-1z"/>
+                                </svg>
+                              </span>
+
+                              <input
+                                type="tel"
+                                id="phoneNumber"
+                                formControlName="phoneNumber"
+                                placeholder="Enter phone number"
+                                class="pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                                [ngClass]="{'border-red-500': isControlInvalid('phoneNumber')}"
+                              >
+                            </div>
+                            <div *ngIf="isControlInvalid('phoneNumber')" class="text-red-500 text-sm mt-1">
+                                {{ getErrorMessage('phoneNumber') }}
+                            </div>
+                          </div>
+
+
+                        <!-- Email -->
+                        <div class="flex flex-col space-y-2">
+                            <label for="email" class="font-medium text-gray-700">Email</label>
+
+                            <div class="relative">
+                              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <!-- Heroicon: Mail -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 12H8m8-4H8m8 8H8m10 4H6a2 2 0 01-2-2V6a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2z" />
+                                </svg>
+                              </span>
+
+                              <input
+                                type="email"
+                                id="email"
+                                formControlName="email"
+                                placeholder="Enter email"
+                                class="pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 w-full"
+                                [ngClass]="{'border-red-500': isControlInvalid('email')}"
+                              >
+                            </div>
+                            <div *ngIf="isControlInvalid('email')" class="text-red-500 text-sm mt-1">
+                                {{ getErrorMessage('email') }}
+                            </div>
+                          </div>
+
+
+                        <!-- Gender -->
+                        <div class="flex flex-col space-y-2">
+                            <label for="gender" class="font-medium text-gray-700">Gender</label>
+
+                            <div class="relative">
+                              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 pointer-events-none">
+                                <!-- Heroicon: Users -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 20h5v-2a4 4 0 00-5-4m-6 6v-2a4 4 0 00-3-3.87M12 4a4 4 0 110 8 4 4 0 010-8zm-6 6a4 4 0 100-8 4 4 0 000 8zm6 6h.01" />
+                                </svg>
+                              </span>
+
+                              <select
+                                id="gender"
+                                formControlName="gender"
+                                class="pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 appearance-none bg-white w-full"
+                                [ngClass]="{'border-red-500': isControlInvalid('gender')}"
+                              >
+                                <option value="" disabled selected>Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                            </div>
+                            <div *ngIf="isControlInvalid('gender')" class="text-red-500 text-sm mt-1">
+                                {{ getErrorMessage('gender') }}
+                            </div>
+                          </div>
+
+
+                        <!-- Manager -->
+                        <div class="flex flex-col space-y-2 md:col-span-2">
+                            <label for="manager" class="font-medium text-gray-700">Manager</label>
+
+                            <div class="relative">
+                              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 pointer-events-none">
+                                <!-- Heroicon: Briefcase (Manager icon) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-7 4h8M9 16v-1m6 1v-1M12 4v2M4 7h16M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M4 7h16" />
+                                </svg>
+                              </span>
+
+                              <select
+                                id="manager"
+                                formControlName="manager"
+                                class="pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 outline-none transition-colors duration-200 appearance-none bg-white w-full"
+                                [ngClass]="{'border-red-500': isControlInvalid('manager')}"
+                              >
+                                <option value="" disabled selected>Select a manager</option>
+                                <option *ngFor="let manager of managers" [value]="manager.username">
+                                    {{ manager.firstName }} {{ manager.lastName }}
+                                </option>
+                              </select>
+                            </div>
+                            <div *ngIf="isControlInvalid('manager')" class="text-red-500 text-sm mt-1">
+                                {{ getErrorMessage('manager') }}
+                            </div>
+                          </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center pt-4">
+                        <button
+                            type="submit"
+                            class="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 min-w-[200px]"
+                            [disabled]="isSubmitting"
+                            [ngClass]="{'opacity-50 cursor-not-allowed': isSubmitting}"
+                        >
+                            <span *ngIf="!isSubmitting">Add Engineer</span>
+                            <span *ngIf="isSubmitting">Adding...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
