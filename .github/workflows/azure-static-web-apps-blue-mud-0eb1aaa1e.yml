@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: 'ailine'    # set this to your application's name
+  AZURE_WEBAPP_NAME: 'cachfront'    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.*'                # set this to the node version to use
 
@@ -57,7 +57,6 @@ jobs:
         name: node-app
     - name: unzip artifact for deployment
       run: unzip release.zip
-    - name: Build And Deploy
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
